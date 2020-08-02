@@ -2,6 +2,8 @@ package com.bookstore.dao;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -98,6 +100,13 @@ public class UserDAOTest {
 	public void testDeleteNonExistUsers() {
 		Integer userId = 55;
 		userDAO.delete(userId);
+	}
+	
+	@Test
+	public void testListAll() {
+		List<Users> listUsers = userDAO.listAll();
+		
+		assertTrue(listUsers.size() > 0);
 	}
 	
 	@AfterClass
