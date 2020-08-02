@@ -43,7 +43,6 @@ public class UserDAOTest {
 	@Test(expected = PersistenceException.class)
 	public void testCreateUsersFieldsNotSet() {
 		Users user1 = new Users();
-		
 		user1 = userDAO.create(user1);
 		
 	}
@@ -65,6 +64,42 @@ public class UserDAOTest {
 		
 	}
 
+	@Test
+	public void testGetUsersFound() {
+		Integer userId = 19;
+		Users user = userDAO.get(userId);
+
+		if (user!=null) {
+			System.out.println(user.getEmail());			
+		}
+
+		assertNotNull(user);
+	}
+	
+	@Test
+	public void testGetUsersNotFound() {
+		Integer userId = 99;
+		Users user = userDAO.get(userId);
+		
+		assertNull(user);
+	}
+	
+	@Test
+	public void testDeleteUsers() {
+		Integer userId = 19;
+		userDAO.delete(userId);
+		
+		Users user = userDAO.get(userId);
+		
+		assertNull(user);
+	}
+	
+	@Test(expected = Exception.class)
+	public void testDeleteNonExistUsers() {
+		Integer userId = 55;
+		userDAO.delete(userId);
+	}
+	
 	@AfterClass
 	public static void tearDownClass() {
 		entityManager.close();
