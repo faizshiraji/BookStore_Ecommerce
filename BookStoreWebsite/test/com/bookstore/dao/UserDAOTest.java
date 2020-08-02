@@ -106,7 +106,18 @@ public class UserDAOTest {
 	public void testListAll() {
 		List<Users> listUsers = userDAO.listAll();
 		
+		for (Users user : listUsers) {
+			System.out.println(user.getEmail());
+		}
+		
 		assertTrue(listUsers.size() > 0);
+	}
+
+	@Test
+	public void testCount() {
+		long totalUsers = userDAO.count();
+		
+		assertEquals(2, totalUsers);
 	}
 	
 	@AfterClass
