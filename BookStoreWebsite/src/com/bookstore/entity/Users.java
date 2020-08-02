@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @NamedQueries({
-			@NamedQuery(name="Users.findAll", query = "SELECT u FROM Users U ORDER BY u.fullName")
+			@NamedQuery(name="Users.findAll", query = "SELECT u FROM Users u ORDER BY u.fullName")
 })
 @Table(name = "users", catalog = "bookstoredb")
 public class Users implements java.io.Serializable {
