@@ -17,6 +17,7 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({
 			@NamedQuery(name="Users.findAll", query = "SELECT u FROM Users u ORDER BY u.fullName"),
+			@NamedQuery(name="Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"),
 			@NamedQuery(name = "Users.countAll", query = "SELECT Count(u.fullName) FROM Users u")
 })
 @Table(name = "users", catalog = "bookstoredb")
@@ -30,12 +31,19 @@ public class Users implements java.io.Serializable {
 	public Users() {
 	}
 
-	public Users(int userId, String email, String password, String fullName) {
-		this.userId = userId;
+	public Users(String email, String password, String fullName) {
+		super();
 		this.email = email;
 		this.password = password;
 		this.fullName = fullName;
 	}
+//
+//	public Users(int userId, String email, String password, String fullName) {
+//		this.userId = userId;
+//		this.email = email;
+//		this.password = password;
+//		this.fullName = fullName;
+//	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
