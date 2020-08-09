@@ -42,13 +42,6 @@ public class Users implements java.io.Serializable {
 		this.password = password;
 		this.fullName = fullName;
 	}
-//
-//	public Users(int userId, String email, String password, String fullName) {
-//		this.userId = userId;
-//		this.email = email;
-//		this.password = password;
-//		this.fullName = fullName;
-//	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

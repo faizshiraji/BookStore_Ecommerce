@@ -20,15 +20,8 @@
 		</h2>
 	</div>
 	<div align="center">
-		<c:if test="${user !=null}">
-			<form action="update_user" method="post"
-				onsubmit="return validateFormInput()">
-				<input type="hidden" name="userId" value="${user.userId}" />
-		</c:if>
-		<c:if test="${user ==null}">
-			<form action="create_user" method="post"
-				onsubmit="return validateFormInput()">
-		</c:if>
+		<c:if test="${user !=null}"> <form action="update_user" method="post" onsubmit="return validateFormInput()"> <input type="hidden" name="userId" value="${user.userId}"/> </c:if>
+		<c:if test="${user !=null}"> <form action="create_user" method="post" onsubmit="return validateFormInput()"> </c:if>
 		<table>
 			<tr>
 				<td align="right">Email:</td>
@@ -49,9 +42,7 @@
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><input type="submit"
-					value="Submit" /> <input type="button" value="Cancel"
-					onclick="javascript:history.go(-1);" /></td>
+				<td colspan="2" align="center"><input type="submit"	value="Submit" /> <input type="button" value="Cancel" onclick="javascript:history.go(-1);" /></td>
 			</tr>
 
 
