@@ -10,7 +10,7 @@ public class CategoyTest {
 
 	public static void main(String[] args) {
 
-Category newCat = new Category(0, "Java Spring Boot");
+Category newCat = new Category("Java Spring Boot");
 
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("BookStoreWebsite");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();

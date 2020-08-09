@@ -71,25 +71,21 @@
 		var fieldEmail = document.getElementById("email");
 		var fieldFullname = document.getElementById("fullname");
 		var fieldPassword = document.getElementById("password");
-
 		if (fieldEmail.value.length == 0) {
 			alert("Email is required!");
 			fieldEmail.focus();
 			return false;
 		}
-
 		if (fieldFullname.value.length == 0) {
 			alert("Full Name is required!");
 			fieldFullname.focus();
 			return false;
 		}
-
 		if (fieldPassword.value.length == 0) {
 			alert("Password is required!");
 			fieldPassword.focus();
 			return false;
 		}
-
 		return true;
 	}
 </script>
