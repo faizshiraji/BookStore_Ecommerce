@@ -1,6 +1,6 @@
 package com.bookstore.controller.admin.category;
 
-import com.bookstore.controller.admin.BaseServlet;
+import com.bookstore.controller.BaseServlet;
 import com.bookstore.service.CategoryServices;
 
 import java.io.IOException;

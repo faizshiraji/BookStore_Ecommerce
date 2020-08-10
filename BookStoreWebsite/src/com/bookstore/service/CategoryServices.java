@@ -43,7 +43,7 @@ public class CategoryServices {
 		requestDispatcher.forward(request, response);
 
 	}
-	
+
 	public void listCategory() throws ServletException, IOException {
 		listCategory(null);
 	}
@@ -67,4 +67,62 @@ public class CategoryServices {
 		}
 	}
 
+	public void editCategory() throws ServletException, IOException {
+		int categoryId = Integer.parseInt(request.getParameter("id"));
+		Category category = categoryDAO.get(categoryId);
+
+		String editPage = "category_form.jsp";
+
+		if (category == null) {
+			editPage = "message.jsp";
+			String errorMessage = "Could not find category with ID " + categoryId + ". Replace" + categoryId
+					+ " by the actual category value ID.";
+			request.setAttribute("message", errorMessage);
+			
+		} else {
+			request.setAttribute("category", category);
+		}
+
+//		request.setAttribute("category", category);
+
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(editPage);
+		requestDispatcher.forward(request, response);
+	}
+
+	public void updateCategory() throws ServletException, IOException {
+		int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+		String categoryName = request.getParameter("name");
+
+		Category categoryById = categoryDAO.get(categoryId);
+		Category categoryByName = categoryDAO.findByName(categoryName);
+
+		if (categoryByName != null && categoryById.getCategoryId() != categoryByName.getCategoryId()) {
+			String message = "Could not update category." + " A category with name " + categoryName
+					+ " already exists.";
+
+			request.setAttribute("message", message);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("message.jsp");
+			requestDispatcher.forward(request, response);
+		} else {
+			categoryById.setName(categoryName);
+			categoryDAO.update(categoryById);
+			String message = "Category has been updated successfully";
+			listCategory(message);
+		}
+	}
+
+	public void deleteCategory() throws ServletException, IOException {
+		int categoryId = Integer.parseInt(request.getParameter("id"));
+		Category category = categoryDAO.get(categoryId);
+
+		if (category == null) {
+			String message = "Could not find category with ID " + categoryId + " or it might have been deleted";
+			listCategory(message);
+		} else {
+			categoryDAO.delete(categoryId);
+
+			String message = "Category has been deleted successfully";
+			listCategory(message);
+		}
+	}
 }

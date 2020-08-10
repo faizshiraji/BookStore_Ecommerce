@@ -11,7 +11,6 @@ public class CategoryDAO extends JpaDAO<Category> implements GenericDAO<Category
 
 	public CategoryDAO(EntityManager entityManager) {
 		super(entityManager);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
