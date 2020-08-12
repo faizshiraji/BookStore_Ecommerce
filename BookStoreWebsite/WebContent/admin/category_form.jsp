@@ -5,6 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../css/style.css" />
+<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 <title><c:if test="${user !=null}">
 			Edit Category
 		</c:if> <c:if test="${user ==null}">
@@ -14,7 +17,7 @@
 <body>
 	<jsp:directive.include file="header.jsp" />
 	<div align="center">
-		<h2>
+		<h2 class="pageheading">
 			<c:if test="${category != null}"> Edit Category </c:if>
 			<c:if test="${category == null}">Create New Category</c:if>
 		</h2>
@@ -23,25 +26,26 @@
 		<c:if test="${category !=null}">
 			<form action="update_category" method="post"
 				onsubmit="return validateFormInput()">
-				<input type="hidden" name="categoryId" value="${category.categoryId}" />
+				<input type="hidden" name="categoryId"
+					value="${category.categoryId}" />
 		</c:if>
 		<c:if test="${category ==null}">
-			<form action="create_category" method="post"
-				onsubmit="return validateFormInput()">
+			<form action="create_category" method="post" name="categoryForm">
 		</c:if>
-		<table>
+		<table class="form">
 			<tr>
 				<td align="right">Name:</td>
-				<td align="left"><input type="text" name="name"
-					id="name" size="20" value="${category.name}" /></td>
+				<td align="left"><input type="text" name="name" id="name"
+					size="20" value="${category.name}" /></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><input type="submit"
-					value="Submit" /> <input type="button" value="Cancel"
-					onclick="javascript:history.go(-1);" /></td>
+				<td colspan="2" align="center">
+					<button type="submit">Submit</button>
+					<button onclick="javascript:history.go(-1);">Cancel</button>
+				</td>
 			</tr>
 
 
@@ -53,14 +57,20 @@
 
 </body>
 <script type="text/javascript">
-	function validateFormInput() {
-		var fieldName = document.getElementById("name");
-		if (fieldName.value.length == 0) {
-			alert("Category Name is required!");
-			fieldName.focus();
-			return false;
-		}
-		return true;
-	}
+$(function() {
+	$("form[name='categoryForm']")
+			.validate(
+					{
+						rules : {
+							name : "required",
+						},
+						messages : {
+							name : " Please enter your category name",
+						},
+						submitHandler : function(form) {
+							form.submit();
+						}
+					});
+});
 </script>
 </html>

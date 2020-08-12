@@ -6,20 +6,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Manage Categories - Evergreen Bookstore Administration</title>
+<link rel="stylesheet" href="../css/style.css"/>
+<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 </head>
 <body>
 
 	<jsp:directive.include file="header.jsp" />
 	
 	<div align="center">
-		<h2>Category Management</h2>
+		<h2 class="pageheading">Category Management</h2>
 		<h3>
 			<a href="category_form.jsp">Create New Category</a>
 		</h3>
 	</div>
 	<c:if test="${message !=null}">
 	<div align="center">
-	<h4>${message}</h4>
+	<h4 class="message" >${message}</h4>
 	
 	</div>
 	</c:if>
@@ -38,7 +41,7 @@
 					<td>${cat.name}</td>
 					
 					<td><a href="edit_category?id=${cat.categoryId}">Edit</a> 
-					<a href="javascript:confirmDelete(${cat.categoryId})">Delete</a></td>
+					<a href="javascript:void(0);" class="deleteLink" id="${cat.categoryId}">Delete</a></td>
 				</tr>
 			</c:forEach>
 
@@ -48,12 +51,19 @@
 	<jsp:directive.include file="footer.jsp" />
 	
 	<script>
-		function confirmDelete(categoryId){
-			if(confirm('Are you sure you want to delete the user with id '+categoryId+' ?')){
-				window.location = 'delete_category?id='+categoryId;
-			}
-			
-		}
+	
+	$(document).ready(function() {
+		$(".deleteLink").each(function() {
+			$(this).on("click", function() {
+				categoryId = $(this).attr("id");
+				if (confirm('Are you sure you want to delete the category with id '
+						+ categoryId + ' ?')) 
+				{
+					window.location = 'delete_category?id=' + categoryId;
+				}
+			});
+		});
+	});
 	</script>
 
 </body>
