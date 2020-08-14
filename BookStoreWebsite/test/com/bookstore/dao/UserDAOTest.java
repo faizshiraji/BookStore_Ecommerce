@@ -137,6 +137,8 @@ public class UserDAOTest extends BaseDAOTest {
 		assertNotNull(user);
 	}
 	
+	
+	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 		BaseDAOTest.tearDownAfterClass();
