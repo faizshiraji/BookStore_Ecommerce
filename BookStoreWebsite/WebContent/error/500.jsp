@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Page Not Found Error</title>
+<title>Internal Server Error</title>
 
 </head>
 
@@ -14,7 +14,8 @@
 			<img alt="" src="${pageContext.request.contextPath}/images/BookstoreAdminLogo.png">
 		</div>
 		<div align="center" >
-			<h2>Sorry, the requested page could not be found.</h2>
+			<h2>Sorry, the server has encountered an error while fulfulling your request.</h2>
+			<h3>Please check back later or contact our administrators.</h3>
 		</div>
 		<div align="center">
 		<a href="javascript:history.go(-1);">Go Back</a>
