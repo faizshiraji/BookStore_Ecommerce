@@ -9,6 +9,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -65,22 +68,22 @@ public class BookDAOTest extends BaseDAOTest {
 	public void testCreateBook() throws ParseException, IOException {
 		Book newBook = new Book();
 		
-		Category category = new Category("Java Basic");
-		category.setCategoryId(13);
+		Category category = new Category("Advance Java");
+		category.setCategoryId(27);
 		newBook.setCategory(category);
 		
-/*1*/	newBook.setTitle("Effective Java (2nd Edition)");
-/*2*/	newBook.setAuthor("Joshua Bloch");
-/*3*/	newBook.setDescription("Are you looking for a deeper understanding of the Java programming language so that you can write code that is clearer, more correct, more robust, and more reusable? Look no further! Effective Java, Second Edition, brings together seventy-eight indispensable programmers rules of thumb: working, best-practice solutions for the programming challenges you encounter every day.");
-/*4*/	newBook.setPrice(38.87f);
-/*5*/	newBook.setIsbn("0321356683");
+/*1*/	newBook.setTitle("Head First Java, 2nd Edition");
+/*2*/	newBook.setAuthor("Kathy Sierra, Bert Bates");
+/*3*/	newBook.setDescription("Learning a complex new language is no easy task especially when it s an object-oriented computer programming language like Java. You might think the problem is your brain. It seems to have a mind of its own, a mind that doesn't always want to take in the dry, technical stuff you're forced to study.");
+/*4*/	newBook.setPrice(27.33f);
+/*5*/	newBook.setIsbn("0596009208");	
 		
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		
-		Date publishDate = dateFormat.parse("05/28/2008");
+		Date publishDate = dateFormat.parse("02/19/2005");
 /*6*/	newBook.setPublishDate(publishDate);
 		
-		String imagePath = "/home/faiz/Downloads/dummy-data-books/books/EffectiveJava.jpg";
+		String imagePath = "/home/faiz/Downloads/dummy-data-books/books/HeadFirstJava.jpg";
 		byte[] imageBytes = Files.readAllBytes(Paths.get(imagePath));
 		newBook.setImage(imageBytes);
 		
@@ -89,4 +92,75 @@ public class BookDAOTest extends BaseDAOTest {
 		assertTrue(createBook.getBookId() > 0);
 	}
 
+	@Test(expected = EntityNotFoundException.class)
+	public void testDeleteBookFail() {
+		Integer bookId = 100;
+		bookDao.delete(bookId);
+		
+		assertTrue(true);
+	}
+	
+	@Test
+	public void testGetBookFail() {
+		Integer bookId = 39;
+		Book book = bookDao.get(bookId);
+
+		assertNull(book);
+	}
+	
+	@Test
+	public void testListAll() {
+		List<Book> listBooks = bookDao.listAll();
+		
+		for (Book aBook : listBooks) {
+			System.out.println(aBook.getTitle() + " - " + aBook.getAuthor());
+		}
+		
+		assertFalse(listBooks.isEmpty());
+	}
+	
+	@Test
+	public void testFindByTitleNotExist() {
+		String title = "Thinking in Java";
+		Book book = bookDao.findByTitle(title);
+		
+		assertNull(book);
+	}
+	
+	@Test
+	public void testFindByTitleExist() {
+		String title = "Head First Java, 2nd Edition";
+		Book book = bookDao.findByTitle(title);
+		
+		System.out.println(book.getAuthor());
+		System.out.println(book.getPrice());
+		
+		assertNotNull(book);
+	}
+	
+	
+	@Test
+	public void testGetBookSuccess() {
+		Integer bookId = 39;
+		Book book = bookDao.get(bookId);
+
+		assertNotNull(book);
+	}
+	
+	@Test
+	public void testCount() {
+		long totalBooks = bookDao.count();
+		
+		assertEquals(5, totalBooks);
+	}
+	
+	@Test
+	public void testDeleteBookSuccess() {
+		Integer bookId = 40;
+		bookDao.delete(bookId);
+		
+		assertTrue(true);
+	}
+	
+	
 }
