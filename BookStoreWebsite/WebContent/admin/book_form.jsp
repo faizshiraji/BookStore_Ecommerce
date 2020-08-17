@@ -7,9 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../css/style.css" />
 <link rel="stylesheet" href="../css/jquery-ui.min.css" />
-<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
 
 <title><c:if test="${book !=null}">
 			Edit Book
@@ -31,13 +31,15 @@
 				<input type="hidden" name="bookId" value="${book.bookId}" />
 		</c:if>
 		<c:if test="${book ==null}">
-			<form action="create_book" method="post" name="bookForm">
+			<form action="create_book" method="post" name="bookForm" enctype="multipart/form-data">
 		</c:if>
 		<table class="form">
 			<tr>
 				<td align="right">Category:</td>
-				<td align="left"><select name="category">
+				<td align="left"><select name="category" id="category">
 						<c:forEach items="${listCategory}" var="category">
+							<option value="none" selected disabled hidden>Select an
+								Option</option>
 							<option value="${category.categoryId}">${category.name}
 							</option>
 						</c:forEach>
@@ -65,9 +67,9 @@
 			</tr>
 			<tr>
 				<td align="right">Book Image:</td>
-				<td align="left"><input type="file" id="bookImage" size="20" /><br />
-				<img id="thumbnail" alt="Image Preview" style="width: 20%; margin-top: 10px" />
-				</td>
+				<td align="left"><input type="file" id="bookImage" name="bookImage" size="20" /><br />
+					<img id="thumbnail" alt="Image Preview"
+					style="width: 20%; margin-top: 10px" /></td>
 			</tr>
 			<tr>
 				<td align="right">Price:</td>
@@ -85,7 +87,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<button type="submit">Submit</button>
-					<button id="buttonCancel">Cancel</button>
+					<button type="cancel" value="Cancel" id="buttonCancel">Cancel</button>
 				</td>
 			</tr>
 
@@ -99,53 +101,58 @@
 </body>
 
 <script type="text/javascript">
-	$(function() {
-		$("#publishDate").datepicker();
-		$("#bookImage").change(function(){
-			showImageThumbnail(this);
-		});	
-		
-		$("form[name='bookForm']")
-				.validate(
-						{
-							rules : {
-								fullname : "required",
-								email : {
-									required : true,
-									email : true
-								},
-								password : {
-									required : true,
-									minlength : 5
-								}
-							},
-						messages : {
-								fullname : " Please enter your full name",
-								password : {
-									required : " Please provide a password",
-									minlength : " Your password must be at least 5 characters long"
-								},
-								email : " Please enter a valid email address"
-							},
-							submitHandler : function(form) {
-								form.submit();
-							}
+	$(document)
+			.ready(
+					function() {
+						$('#publishDate').datepicker();
+						$('#bookImage').change(function() {
+							showImageThumbnail(this);
 						});
-		$("buttonCancel").click(function(){
-			history.go(-1);
-		});
-	});
-	
-	function showImageThumbnail(fileInput) {
-		var file = fileInput.files[0];
+						$('#buttonCancel').on('click', function(e) {
+							e.preventDefault();
+							window.history.go(-1);
+						});
 
-		var reader = new FileReader();
+						$("form[name='bookForm']")
+								.validate(
+										{
+											rules : {
+												category: "required",
+												title : "required",
+												author: "required",
+												isbn: "required",
+												publishDate: "required",
+												bookImage: "required",
+												price: "required",
+												description: "required"
+											},
+											messages : {
+												category: " Please select your book category",
+												title : " Please enter your book title name",
+												author: " Please enter your book author name",
+												isbn: " Please enter your book isbn number",
+												publishDate: " Please select your Publish Date",
+												bookImage: " Please upload your book image",
+												price: " Please enter your price for your book",
+												description: " Please enter your book description"
+											},
+											submitHandler : function(form) {
+												form.submit();
+											}
+										});
 
-		reader.onload = function(e) {
-			$("#thumbnail").attr("src", e.target.result);
-		};
+						function showImageThumbnail(fileInput) {
+							var file = fileInput.files[0];
 
-		reader.readAsDataURL(file);
-	}
+							var reader = new FileReader();
+
+							reader.onload = function(e) {
+								$("#thumbnail").attr("src", e.target.result);
+							};
+
+							reader.readAsDataURL(file);
+						}
+						;
+					});
 </script>
 </html>
