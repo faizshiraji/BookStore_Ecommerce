@@ -86,6 +86,7 @@ public class BookServices {
 		newBook.setAuthor(author);
 		newBook.setDescription(description);
 		newBook.setIsbn(isbn);
+		newBook.setPublishDate(publishDate);
 		
 		Category category = categoryDAO.get(categoryId);
 		newBook.setCategory(category);
