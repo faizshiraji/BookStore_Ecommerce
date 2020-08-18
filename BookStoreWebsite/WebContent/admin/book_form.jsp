@@ -27,21 +27,28 @@
 	</div>
 	<div align="center">
 		<c:if test="${book !=null}">
-			<form id="bookForm" action="update_book" method="post">
+			<form id="bookForm" name="bookForm" action="update_book" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="bookId" value="${book.bookId}" />
 		</c:if>
 		<c:if test="${book ==null}">
 			<form action="create_book" method="post" name="bookForm" enctype="multipart/form-data">
 		</c:if>
+		
+		
 		<table class="form">
 			<tr>
 				<td align="right">Category:</td>
 				<td align="left"><select name="category" id="category">
 						<c:forEach items="${listCategory}" var="category">
-							<option value="none" selected disabled hidden>Select an
-								Option</option>
-							<option value="${category.categoryId}">${category.name}
+							<c:if test="${category.categoryId eq book.category.categoryId}">
+								<option value="${category.categoryId}" selected>
+							</c:if>
+							<c:if test="${category.categoryId ne book.category.categoryId}">
+								<option value="${category.categoryId}">
+							</c:if>
+							${category.name}
 							</option>
+		
 						</c:forEach>
 				</select></td>
 			</tr>
@@ -69,7 +76,7 @@
 				<td align="right">Book Image:</td>
 				<td align="left"><input type="file" id="bookImage" name="bookImage" size="20" /><br />
 					<img id="thumbnail" alt="Image Preview"
-					style="width: 20%; margin-top: 10px" /></td>
+					style="width: 20%; margin-top: 10px" src="data:image/jpg;base64,${book.base64Image}" /></td>
 			</tr>
 			<tr>
 				<td align="right">Price:</td>
@@ -79,14 +86,14 @@
 			<tr>
 				<td align="right">Description:</td>
 				<td align="left"><textarea row="5" cols="50" name="description"
-						id="description"></textarea></td>
+						id="description">${book.description}</textarea></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<button type="submit">Submit</button>
+					<button type="submit">Save</button>
 					<button type="cancel" value="Cancel" id="buttonCancel">Cancel</button>
 				</td>
 			</tr>
@@ -122,7 +129,9 @@
 												author: "required",
 												isbn: "required",
 												publishDate: "required",
+												<c:if test="${book == null}">
 												bookImage: "required",
+												</c:if>
 												price: "required",
 												description: "required"
 											},

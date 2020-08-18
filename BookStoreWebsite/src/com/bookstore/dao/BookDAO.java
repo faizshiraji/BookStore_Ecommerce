@@ -53,6 +53,8 @@ public class BookDAO extends JpaDAO<Book> implements GenericDAO<Book> {
 		
 	}
 	
+	
+	
 	@Override
 	public long count() {
 
