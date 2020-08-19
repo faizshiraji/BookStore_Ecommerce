@@ -128,7 +128,7 @@ public class BookServices {
 			book.setImage(imageBytes);
 		}
 
-		
+		System.out.println("This is the publish date:" + publishDate);
 	}
 	
 	public void editBook() throws ServletException, IOException {
@@ -149,7 +149,6 @@ public class BookServices {
 	
 	public void updateBook() throws ServletException, IOException {
 		Integer bookId = Integer.parseInt(request.getParameter("bookId"));
-		
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		Date publishDate;
 		
