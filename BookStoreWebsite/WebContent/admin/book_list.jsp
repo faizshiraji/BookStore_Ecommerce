@@ -67,7 +67,7 @@
 					if (confirm('Are you sure you want to delete the user with id '
 							+ userId + ' ?')) 
 					{
-						window.location = 'delete_user?id=' + userId;
+						window.location = 'delete_book?id=' + userId;
 					}
 				});
 			});
