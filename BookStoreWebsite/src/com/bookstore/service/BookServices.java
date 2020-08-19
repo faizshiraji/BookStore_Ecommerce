@@ -134,15 +134,26 @@ public class BookServices {
 
 		Integer bookId = Integer.parseInt(request.getParameter("id"));
 		Book book = bookDAO.get(bookId);
-		List<Category> listCategory = categoryDAO.listAll();
-		
-		request.setAttribute("book", book);
-		request.setAttribute("listCategory", listCategory);
-		
 		
 		String editPage = "book_form.jsp";
+		if (book == null) {
+			editPage = "message.jsp";
+			String errorMessage = "Could not find book with ID " + bookId + ". Replace" + bookId 
+					+ " by the actual book value ID.";
+			request.setAttribute("message", errorMessage);
+		}else {
+			request.setAttribute("book", book);
+		
+			List<Category> listCategory = categoryDAO.listAll();
+			
+			request.setAttribute("book", book);
+			request.setAttribute("listCategory", listCategory);
+			
+		}
+
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(editPage);
 		requestDispatcher.forward(request, response);
+
 	}
 
 	
