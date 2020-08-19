@@ -94,14 +94,14 @@ public class BookServices {
 		String isbn = request.getParameter("isbn");
 		float price = Float.parseFloat(request.getParameter("price"));
 		
-		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 		Date publishDate;
 		
 		try {
 			publishDate = dateFormat.parse(request.getParameter("publishDate"));
 		} catch (java.text.ParseException ex) {
 			ex.printStackTrace();
-			throw new ServletException("Error parsing publish date (format is MM/dd/yyyy)");
+			throw new ServletException("Error parsing publish date (format is yyyy-mm-dd)");
 		}
 		
 		book.setTitle(title);
@@ -128,7 +128,6 @@ public class BookServices {
 			book.setImage(imageBytes);
 		}
 
-		System.out.println("This is the publish date:" + publishDate);
 	}
 	
 	public void editBook() throws ServletException, IOException {
@@ -149,16 +148,7 @@ public class BookServices {
 	
 	public void updateBook() throws ServletException, IOException {
 		Integer bookId = Integer.parseInt(request.getParameter("bookId"));
-		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		Date publishDate;
-		
-		try {
-			publishDate = dateFormat.parse(request.getParameter("publishDate"));
-		} catch (java.text.ParseException ex) {
-			ex.printStackTrace();
-			throw new ServletException("Error parsing publish date (format is MM/dd/yyyy)");
-		}
-		
+
 		Book existBook = bookDAO.get(bookId);
 		
 		readBookFields(existBook);
@@ -166,6 +156,7 @@ public class BookServices {
 		bookDAO.update(existBook);
 		
 		String message = "The book has been updated successfully.";
+		
 		listBooks(message);
 	}
 }
