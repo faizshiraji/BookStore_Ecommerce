@@ -30,10 +30,12 @@ import org.hibernate.annotations.NotFoundAction;
  */
 @Entity
 @Table(name = "book", catalog = "bookstoredb", uniqueConstraints = @UniqueConstraint(columnNames = "title"))
-@NamedQueries({
-	@NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b"),
-	@NamedQuery(name = "Book.findById", query = "SELECT b FROM Book b WHERE b.title = :title"),
-	@NamedQuery(name = "Book.countAll", query = "SELECT Count(b.title) FROM Book b")
+@NamedQueries({ @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b"),
+		@NamedQuery(name = "Book.findById", query = "SELECT b FROM Book b WHERE b.title = :title"),
+		@NamedQuery(name = "Book.countAll", query = "SELECT Count(b.title) FROM Book b"),
+		@NamedQuery(name = "Book.findByCategory", query = "SELECT b FROM Book b JOIN Category c ON b.category.categoryId = c.categoryId AND c.categoryId = :catId"),
+		@NamedQuery(name = "Book.listNew", query = "SELECT b FROM Book b ORDER BY b.publishDate DESC"),
+		@NamedQuery(name = "Book.search", query = "SELECT b FROM Book b WHERE b.title LIKE '%' || :keyword || '%' OR b.author LIKE '%' || :keyword || '%' OR b.description LIKE '%' || :keyword || '%'") 
 })
 public class Book implements java.io.Serializable {
 
@@ -104,11 +106,11 @@ public class Book implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id", nullable = false)
 	@NotFound(action = NotFoundAction.IGNORE)
-	
+
 	public Category getCategory() {
 		return this.category;
 	}
-	
+
 	public void setCategory(Category category) {
 		this.category = category;
 	}
@@ -204,16 +206,16 @@ public class Book implements java.io.Serializable {
 	public void setOrderDetails(Set<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
-	
+
 	@Transient
 	public String getBase64Image() {
 		this.base64Image = Base64.getEncoder().encodeToString(this.image);
 		return this.base64Image;
 	}
-	
+
 	@Transient
 	public void setBase64Image(String base64Image) {
 		this.base64Image = base64Image;
 	}
-	
+
 }
