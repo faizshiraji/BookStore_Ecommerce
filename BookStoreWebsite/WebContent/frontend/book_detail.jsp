@@ -5,22 +5,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${book.title}- Online Books Store</title>
-<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
 	<jsp:directive.include file="header.jsp" />
 
-	<div align="center">
-		<table width="80%" border="0">
+	<div class="center">
+		<table class="book">
 			<tr>
-				<td colspan="3" align="left" height="10%">
+				<td colspan="3" align="left">
 					<h2>${book.title}</h2> by ${book.author}
 				</td>
 			</tr>
 			<tr>
-				<td rowspan="2"><img src="data:image/jpg;base64,${book.base64Image}"
-					width="240" height="300" /></td>
+				<td rowspan="2">
+					<img class="book-large" src="data:image/jpg;base64,${book.base64Image}"/></td>
 				<td valign="top" align="left">Rating *****</td>
 				<td valign="top" rowspan="2" width="20%"><h2>$${book.price}</h2> <br /><br />
 					<button type="submit">Add to Cart</button>

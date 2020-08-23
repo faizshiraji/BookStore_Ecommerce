@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,19 +20,17 @@ import com.bookstore.entity.Category;
 
 public class BookServices {
 
-	private EntityManager entityManager;
 	private BookDAO bookDAO;
 	private CategoryDAO categoryDAO;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
-	public BookServices(EntityManager entityManager, HttpServletRequest request, HttpServletResponse response) {
+	public BookServices(HttpServletRequest request, HttpServletResponse response) {
 		super();
-		this.entityManager = entityManager;
 		this.request = request;
 		this.response = response;
-		bookDAO = new BookDAO(entityManager);
-		categoryDAO = new CategoryDAO(entityManager);
+		bookDAO = new BookDAO();
+		categoryDAO = new CategoryDAO();
 	}
 
 	public void listBooks() throws ServletException, IOException {
@@ -90,14 +87,14 @@ public class BookServices {
 		String isbn = request.getParameter("isbn");
 		float price = Float.parseFloat(request.getParameter("price"));
 
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
 		Date publishDate;
 
 		try {
 			publishDate = dateFormat.parse(request.getParameter("publishDate"));
 		} catch (java.text.ParseException ex) {
 			ex.printStackTrace();
-			throw new ServletException("Error parsing publish date (format is yyyy-mm-dd)");
+			throw new ServletException("Error parsing publish date (format is mm/dd/yyyy)");
 		}
 
 		book.setTitle(title);
@@ -181,9 +178,7 @@ public class BookServices {
 		int categoryId = Integer.parseInt(request.getParameter("id"));
 		List<Book> listBooks = bookDAO.listByCategory(categoryId);
 		Category category = categoryDAO.get(categoryId);
-		List<Category> listCategory = categoryDAO.listAll();
-	
-		request.setAttribute("listCategory", listCategory);
+
 		request.setAttribute("listBooks", listBooks);
 		request.setAttribute("category", category);
 		
@@ -195,9 +190,7 @@ public class BookServices {
 	public void viewBookDetail() throws ServletException, IOException {
 		Integer bookId = Integer.parseInt(request.getParameter("id"));
 		Book book = bookDAO.get(bookId);
-		List<Category> listCategory = categoryDAO.listAll();
 		
-		request.setAttribute("listCategory", listCategory);
 		request.setAttribute("book", book);
 		
 		String detailPage = "frontend/book_detail.jsp";

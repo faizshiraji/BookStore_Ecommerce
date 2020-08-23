@@ -7,22 +7,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Result for ${keyword} - Online Books Store</title>
+<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
 	<jsp:directive.include file="header.jsp" />
 
-	<div align="center">
+	<div class="center">
 		<c:if test="${fn:length(result) == 0}">
 
 			<h2>No Results for "${keyword}"</h2>
 
-			<div align="center" style="width: 80%; margin: 0 auto;">
+			<div class="book-group">
 		</c:if>
 
 		<c:if test="${fn:length(result) > 0}">
 
-			<div align="left" style="width: 80%; margin: 0 auto;">
+			<div class="book-group">
 				<center><h2>Results for "${keyword}":</h2></center>
 				<c:forEach items="${result}" var="book">
 					<div>

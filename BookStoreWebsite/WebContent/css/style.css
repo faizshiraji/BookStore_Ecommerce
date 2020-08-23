@@ -55,6 +55,7 @@ table.form {
 	padding: 4px;
 }
 
+
 button {
 	padding: 6px;
 	border-radius: 5px; 
@@ -86,3 +87,40 @@ input {
 	font-style: italic;
 	margin: 5px;
 }
+
+div.center {
+	text-align: center;
+}
+
+table.book {
+	text-align: justify;
+	border: 0;
+	width: 80%;
+    margin: 0 auto;
+}
+
+div.book {
+	display: inline-block;
+	margin: 20px;
+	text-align: center;
+}
+
+div.book-group {
+	width: 80%;
+	margin: 0 auto;
+}
+
+div.next-row{
+	clear:both;
+}
+
+img.book-small{
+	width: 128px;
+	height: 164px;
+}
+
+img.book-large{
+	width: 240px;
+	height: 300px;
+}
+

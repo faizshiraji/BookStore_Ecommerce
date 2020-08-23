@@ -10,7 +10,7 @@
 
 	<jsp:directive.include file="header.jsp" />
 
-	<div align="center">
+	<div class="center">
 		<h3>This is main content:</h3>
 		<h2>New Books:</h2>
 		<h2>Best-Selling Books:</h2>
