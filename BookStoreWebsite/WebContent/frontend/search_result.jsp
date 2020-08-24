@@ -15,30 +15,21 @@
 
 	<div class="center">
 		<c:if test="${fn:length(result) == 0}">
-
 			<h2>No Results for "${keyword}"</h2>
-
-			<div class="book-group">
 		</c:if>
-
 		<c:if test="${fn:length(result) > 0}">
-
 			<div class="book-group">
 				<center><h2>Results for "${keyword}":</h2></center>
 				<c:forEach items="${result}" var="book">
 					<div>
-						<div style="display: inline-block; margin: 20px; width: 10%;" >
-							<div align="left">
-								<a href="view_book?id=${book.bookId}"> <img alt=""
-									src="data:image/jpg;base64, ${book.base64Image}" width="128"
-									height="164" />
+						<div id="search-image">
+							<div>
+								<a href="view_book?id=${book.bookId}">
+									<img class="book-small" src="data:image/jpg;base64,${book.base64Image}"/>
 								</a>
 							</div>
 						</div>
-
-						<div
-							style="display: inline-block; margin: 20px; vertical-align: top; width: 60%;"
-							align="left" >
+						<div id="search-description">
 							<div>
 								<h2>
 									<a href="view_book?id=${book.bookId}">${book.title}</a>
@@ -52,12 +43,9 @@
 								<p>${fn:substring(book.description, 0, 100)}...</p>
 							</div>
 						</div>
-						<div
-							style="display: inline-block; margin: 20px; vertical-align: top;">
+						<div id="search-price">
 							<h3>$${book.price}</h3>
-							<h3>
-								<a href="">Add To Cart</a>
-							</h3>
+							<h3><a href="">Add To Cart</a></h3>
 						</div>
 					</div>
 				</c:forEach>

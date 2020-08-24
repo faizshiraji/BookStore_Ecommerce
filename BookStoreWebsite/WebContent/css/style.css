@@ -53,8 +53,9 @@ th {
 table.form {
 	border: 0;
 	padding: 4px;
+	width: 80%;
+	margin: 0 auto;
 }
-
 
 button {
 	padding: 6px;
@@ -93,7 +94,6 @@ div.center {
 }
 
 table.book {
-	text-align: justify;
 	border: 0;
 	width: 80%;
     margin: 0 auto;
@@ -124,3 +124,37 @@ img.book-large{
 	height: 300px;
 }
 
+#book-title {
+	font-size: x-large;
+	fornt-weight: bold;
+}
+
+#author {
+	font-size: large;
+	font-style: italic;
+}
+
+#description {
+	text-align: justify;
+	vertical-align: top;
+}
+
+#search-image {
+	display: inline-block;
+	margin: 20px;
+	width: 10%;
+}
+
+#search-description {
+	display: inline-block;
+	margin: 20px;
+	vertical-align: top;
+	width: 60%; 
+	text-align: left;
+}
+
+#search-price {
+	display: inline-block; 
+	margin: 20px; 
+	vertical-align: top;
+}

@@ -5,12 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="..//css/style.css" />
 <link rel="stylesheet" href="../css/jquery-ui.min.css" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/richtext.min.css">
 <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="../js/jquery-ui.min.js"></script>
-
+<script type="text/javascript" src="../js/jquery.richtext.min.js"></script>
 <title><c:if test="${book !=null}">
 			Edit Book
 		</c:if> <c:if test="${book ==null}">
@@ -27,14 +29,16 @@
 	</div>
 	<div align="center">
 		<c:if test="${book !=null}">
-			<form id="bookForm" name="bookForm" action="update_book" method="post" enctype="multipart/form-data">
+			<form id="bookForm" name="bookForm" action="update_book"
+				method="post" enctype="multipart/form-data">
 				<input type="hidden" name="bookId" value="${book.bookId}" />
 		</c:if>
 		<c:if test="${book ==null}">
-			<form action="create_book" method="post" name="bookForm" enctype="multipart/form-data">
+			<form action="create_book" method="post" name="bookForm"
+				enctype="multipart/form-data">
 		</c:if>
-		
-		
+
+
 		<table class="form">
 			<tr>
 				<td align="right">Category:</td>
@@ -48,7 +52,7 @@
 							</c:if>
 							${category.name}
 							</option>
-		
+
 						</c:forEach>
 				</select></td>
 			</tr>
@@ -74,9 +78,10 @@
 			</tr>
 			<tr>
 				<td align="right">Book Image:</td>
-				<td align="left"><input type="file" id="bookImage" name="bookImage" size="20" /><br />
-					<img id="thumbnail" alt="Image Preview"
-					style="width: 20%; margin-top: 10px" src="data:image/jpg;base64,${book.base64Image}" /></td>
+				<td align="left"><input type="file" id="bookImage"
+					name="bookImage" size="20" /><br /> <img id="thumbnail"
+					alt="Image Preview" style="width: 20%; margin-top: 10px"
+					src="data:image/jpg;base64,${book.base64Image}" /></td>
 			</tr>
 			<tr>
 				<td align="right">Price:</td>
@@ -111,7 +116,8 @@
 	$(document)
 			.ready(
 					function() {
-						$('#publishDate').datepicker();
+						$('#publishDate').datepicker({ dateFormat: 'yy-mm-dd' });
+						$('#description').richText();
 						$('#bookImage').change(function() {
 							showImageThumbnail(this);
 						});

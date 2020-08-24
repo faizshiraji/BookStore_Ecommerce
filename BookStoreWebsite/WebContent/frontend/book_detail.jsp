@@ -15,7 +15,8 @@
 		<table class="book">
 			<tr>
 				<td colspan="3" align="left">
-					<h2>${book.title}</h2> by ${book.author}
+					<p id="book-title">${book.title}</p>
+					by <span id="author">${book.author}</span>
 				</td>
 			</tr>
 			<tr>
@@ -27,7 +28,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td valign="top">
+				<td id="description">
 				${book.description}
 				</td>
 			</tr>

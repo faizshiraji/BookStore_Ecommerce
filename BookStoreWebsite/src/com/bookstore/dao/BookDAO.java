@@ -3,8 +3,6 @@ package com.bookstore.dao;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import com.bookstore.entity.Book;
 
@@ -71,6 +69,10 @@ public class BookDAO extends JpaDAO<Book> implements GenericDAO<Book> {
 	public long count() {
 
 		return super.countWithNamedQuery("Book.countAll");
+	}
+	
+	public long countByCategory(int categoryId) {
+		return super.countWithNamedQuery("Book.countByCategory", "catId", categoryId);
 	}
 
 }

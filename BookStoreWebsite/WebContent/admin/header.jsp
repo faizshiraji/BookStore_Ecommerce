@@ -3,7 +3,9 @@
 <div align="center">
 
 	<div>
-		<img alt="" src="../images/BookstoreAdminLogo.png">
+		<a href="${pageContext.request.contextPath}/admin/">
+			<img alt="" src="../images/BookstoreAdminLogo.png">
+		</a>
 	</div>
 	<div>
 		Welcome, <c:out value="${sessionScope.useremail }"></c:out> | <a href="logout">Logout</a> <br> <br />
@@ -25,7 +27,7 @@
 			</a>
 		</div>
 		<div >
-			<a href="list_customers"> <img alt="Users"
+			<a href="list_customer"> <img alt="Users"
 				src="../images/customers.png" /> <br />Customers
 			</a>
 		</div>

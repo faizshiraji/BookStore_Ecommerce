@@ -87,14 +87,14 @@ public class BookServices {
 		String isbn = request.getParameter("isbn");
 		float price = Float.parseFloat(request.getParameter("price"));
 
-		DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 		Date publishDate;
 
 		try {
 			publishDate = dateFormat.parse(request.getParameter("publishDate"));
 		} catch (java.text.ParseException ex) {
 			ex.printStackTrace();
-			throw new ServletException("Error parsing publish date (format is mm/dd/yyyy)");
+			throw new ServletException("Error parsing publish date (format is yyyy-mm-dd)");
 		}
 
 		book.setTitle(title);
@@ -151,9 +151,17 @@ public class BookServices {
 
 	public void updateBook() throws ServletException, IOException {
 		Integer bookId = Integer.parseInt(request.getParameter("bookId"));
-
+		String title = request.getParameter("title");
+		
 		Book existBook = bookDAO.get(bookId);
-
+		Book bookByTitle = bookDAO.findByTitle(title);
+		
+		if (bookByTitle != null && !existBook.equals(bookByTitle)) {
+			String message = "Could not update book because there's another book having same title.";
+			listBooks(message);
+			return;
+		}
+		
 		readBookFields(existBook);
 
 		bookDAO.update(existBook);
