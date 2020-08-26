@@ -53,13 +53,13 @@ th {
 table.form {
 	border: 0;
 	padding: 4px;
-	width: 80%;
-	margin: 0 auto;
+
 }
 
 button {
 	padding: 6px;
 	border-radius: 5px; 
+
 }
 
 button[type=submit] {

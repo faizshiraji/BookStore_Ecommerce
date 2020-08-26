@@ -63,11 +63,11 @@
 		$(document).ready(function() {
 			$(".deleteLink").each(function() {
 				$(this).on("click", function() {
-					userId = $(this).attr("id");
-					if (confirm('Are you sure you want to delete the user with id '
-							+ userId + ' ?')) 
+					bookId = $(this).attr("id");
+					if (confirm('Are you sure you want to delete the book with id '
+							+ bookId + ' ?')) 
 					{
-						window.location = 'delete_book?id=' + userId;
+						window.location = 'delete_book?id=' + bookId;
 					}
 				});
 			});

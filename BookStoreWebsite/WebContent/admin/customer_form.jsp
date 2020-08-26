@@ -52,7 +52,7 @@
 						<tr>
 				<td align="right">Full Name:</td>
 				<td align="left"><input type="text" name="fullName" id="fullName"
-					size="20" value="${customer.fullName}" /></td>
+					size="20" value="${customer.fullname}" /></td>
 			</tr>
 						<tr>
 				<td align="right">Address:</td>
@@ -77,7 +77,7 @@
 						<tr>
 				<td align="right">Zip Code:</td>
 				<td align="left"><input type="text" name="zipCode" id="zipCode"
-					size="20" value="${customer.zipCode}" /></td>
+					size="20" value="${customer.zipcode}" /></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>

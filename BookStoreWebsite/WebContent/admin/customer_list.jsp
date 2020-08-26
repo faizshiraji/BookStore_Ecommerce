@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Manage Customers - Evergreen Bookstore Administration</title>
 <link rel="stylesheet" href="../css/style.css" />
+<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
 </head>
 <body>
 
@@ -44,7 +45,7 @@
 					<td>${customer.country}</td>
 					<td>${customer.registerDate}</td>
 					
-					<td><a href="edit_book?id=${customer.customerId}">Edit</a> <a
+					<td><a href="edit_customer?id=${customer.customerId}">Edit</a> <a
 						href="javascript:void(0);" class="deleteLink" id="${customer.customerId}">Delete</a></td>
 				</tr>
 			</c:forEach>
@@ -57,11 +58,11 @@
 		$(document).ready(function() {
 			$(".deleteLink").each(function() {
 				$(this).on("click", function() {
-					userId = $(this).attr("id");
-					if (confirm('Are you sure you want to delete the user with id '
-							+ userId + ' ?')) 
+					customerId = $(this).attr("id");
+					if (confirm('Are you sure you want to delete this customer with id '
+							+ customerId + ' ?')) 
 					{
-						window.location = 'delete_book?id=' + userId;
+						window.location = 'delete_customer?id=' + customerId;
 					}
 				});
 			});
