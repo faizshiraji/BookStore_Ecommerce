@@ -95,8 +95,10 @@ div.center {
 
 table.book {
 	border: 0;
-	width: 80%;
-    margin: 0 auto;
+}
+
+table.normal {
+	border: 0;
 }
 
 div.book {

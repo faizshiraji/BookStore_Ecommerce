@@ -71,9 +71,16 @@ public class CustomerServices {
 		String zipCode = request.getParameter("zipCode");
 		String country = request.getParameter("country");
 
-		customer.setEmail(email);
+		if (email != null && !email.equals("")) {
+			customer.setEmail(email);	
+		}
+		
 		customer.setFullname(fullName);
-		customer.setPassword(password);
+		
+		if (password != null && !password.equals("")) {
+			customer.setPassword(password);
+		}
+		
 		customer.setPhone(phone);
 		customer.setAddress(address);
 		customer.setCity(city);
@@ -171,9 +178,29 @@ public class CustomerServices {
 			request.setAttribute("message", message);
 			showLogin();
 		}else {
-			String profile = "frontend/customer_profile.jsp";
-			RequestDispatcher dispatcher = request.getRequestDispatcher(profile);
-			dispatcher.forward(request, response);
+			request.getSession().setAttribute("loggedCustomer", customer);
+
+			showcCustomerProfile();
 		}
+	}
+	
+	public void showcCustomerProfile() throws ServletException, IOException {
+		String profile = "frontend/customer_profile.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(profile);
+		dispatcher.forward(request, response);
+	}
+
+	public void showCustomerProfileEditForm() throws ServletException, IOException {
+		String profile = "frontend/edit_profile.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(profile);
+		dispatcher.forward(request, response);
+	}
+
+	public void updateCustomerProfile() throws ServletException, IOException {
+		Customer customer = (Customer) request.getSession().getAttribute("loggedCustomer"); // collect data from session	
+		updateCustomerFieldFromForm(customer);
+		customerDAO.update(customer);
+		
+		showcCustomerProfile();
 	}
 }
