@@ -4,8 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${book.title}-Online Books Store</title>
+<title>${book.title}-OnlineBooksStore</title>
 <link rel="stylesheet" href="css/style.css" />
+<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 </head>
 <body>
 
@@ -21,13 +22,12 @@
 			<tr>
 				<td rowspan="2"><img class="book-large"
 					src="data:image/jpg;base64,${book.base64Image}" /></td>
-				<td valign="top" align="left">
-					Rating: <jsp:directive.include file="book_rating.jsp" />
+				<td valign="top" align="left">Rating: <jsp:directive.include
+						file="book_rating.jsp" />
 				</td>
 				<td valign="top" rowspan="2" width="20%"><h2>$${book.price}</h2>
-					<br />
-				<br />
-					<button type="submit">Add to Cart</button></td>
+					<br /> <br />
+					<button id="buttonAddToCart" name="buttonAddToCart">Add to Cart</button></td>
 			</tr>
 			<tr>
 				<td id="description">${book.description}</td>
@@ -38,13 +38,50 @@
 			<tr>
 				<td><h2>Customer Reviews</h2></td>
 				<td colspan="2" align="center">
-					<button>Write a customer Review</button>
+					<button id="buttonWriteReview">Write a customer Review</button>
 				</td>
 			</tr>
+
+			<tr>
+				<td colspan="3" align="left">
+					<table class="normal">
+						<c:forEach items="${book.reviews}" var="review">
+							<tr>
+								<td><c:forTokens items="${review.stars}" delims=","	var="star">
+										<c:if test="${star eq 'on'}">
+											<img src="images/rating_on.png" />
+										</c:if>
+										<c:if test="${star eq 'off'}">
+											<img src="images/rating_off.png" />
+										</c:if>
+									</c:forTokens> <b>${review.headline}</b></td>
+							</tr>
+							<tr>
+								<td> 
+								by ${review.customer.fullname} on ${review.reviewTime}
+								</td>
+							</tr>
+							<tr><td><i>${review.comment}</i></td></tr>
+						</c:forEach>
+					</table>
+				</td>
+			</tr>
+
 		</table>
 	</div>
 
 	<jsp:directive.include file="footer.jsp" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#buttonWriteReview').on('click', function() {
+				window.location = 'write_review?book_id=' + ${book.bookId}
+			});
+			$('#buttonAddToCart').on('click', function() {
+				window.location = 'add_to_cart?book_id=' + ${book.bookId}
+			});
+		});
+	</script>
 
 </body>
+
 </html>
