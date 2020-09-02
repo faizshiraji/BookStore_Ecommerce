@@ -36,11 +36,11 @@ public class AdminLoginFilter implements Filter {
 			dispatcher.forward(request, response);
 
 		} else if (loggedIn || loginRequest) {
-			System.out.println("user logged in");
+//			System.out.println("user logged in");
 			chain.doFilter(request, response);
 
 		} else {
-			System.out.println("user not logged in");
+//			System.out.println("user not logged in");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 			dispatcher.forward(request, response);
 		}

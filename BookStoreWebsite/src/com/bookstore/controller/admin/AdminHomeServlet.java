@@ -25,7 +25,7 @@ public class AdminHomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String homepage = "index.jsp";
-		System.out.println("AdminHomeServlet");
+//		System.out.println("AdminHomeServlet");
 		RequestDispatcher dispatcher = request.getRequestDispatcher(homepage);
 		dispatcher.forward(request, response);
 	}

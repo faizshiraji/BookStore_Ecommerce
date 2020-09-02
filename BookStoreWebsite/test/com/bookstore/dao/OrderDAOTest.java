@@ -34,7 +34,7 @@ public class OrderDAOTest {
 	public void testCreateBookOrder() {
 		BookOrder order = new BookOrder();
 		Customer customer = new Customer();
-		customer.setCustomerId(18);
+		customer.setCustomerId(15);
 
 		order.setCustomer(customer);
 		order.setRecipientName("Md. Faiz");

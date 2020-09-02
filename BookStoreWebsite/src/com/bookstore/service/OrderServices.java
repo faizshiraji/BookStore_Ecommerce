@@ -36,4 +36,18 @@ public class OrderServices {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(listPage);
 		dispatcher.forward(request, response);
 	}
+
+
+
+	public void viewOrderDetailForAdmin() throws ServletException, IOException {
+		int orderId = Integer.parseInt(request.getParameter("id"));
+		
+		BookOrder order = orderDAO.get(orderId);
+		request.setAttribute("order", order);
+		
+		String detailPage = "order_detail.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(detailPage);
+		dispatcher.forward(request, response);
+		
+	}
 }
