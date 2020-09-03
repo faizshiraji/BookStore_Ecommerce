@@ -28,17 +28,17 @@
 					<td colspan="3"><hr /></td>
 				</tr>
 				<tr>
-					<td><span id="book-title">${book.title}</span><br /> <img
-						class="book-large" src="data:image/jpg;base64,${book.base64Image}" />
+					<td>
+						<span id="book-title">${book.title}</span><br /> 
+						<img class="book-large" src="data:image/jpg;base64,${book.base64Image}" />
 					</td>
 					<td>
-						<div id="rateYo"></div> <input type="hidden" id="rating"
-						name="rating" /> <input type="hidden" name="bookId"
-						value="${book.bookId}" /> <br /> <input type="text"
-						name="headline" size="60"
-						placeholder="Headline or summary for your review (required)" /> <br />
-					<br /> <textarea rows="10" cols="70" name="comment"
-							placeholder="Write your review details..."></textarea>
+						<div id="rateYo"></div> 
+						<input type="hidden" id="rating" name="rating" /> 
+						<input type="hidden" name="bookId" value="${book.bookId}" /> <br /> 
+						<input type="text" name="headline" size="60" placeholder="Headline or summary for your review (required)" /> 
+						<br /> <br /> 
+						<textarea rows="10" cols="70" name="comment" placeholder="Write your review details..."></textarea>
 					</td>
 				</tr>
 				<tr>

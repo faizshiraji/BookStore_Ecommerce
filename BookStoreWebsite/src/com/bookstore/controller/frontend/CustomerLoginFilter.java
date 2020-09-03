@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 public class CustomerLoginFilter implements Filter {
 
 	private static final String[] loginRequiredURLs = {
-		"/view_profile", "/edit_profile", "/update_profile", "/write_review", "/checkout", "/place_order"
+		"/view_profile", "/edit_profile", "/update_profile", "/write_review", "/checkout", "/place_order", "/view_orders", "/show_order_detail"
 	};
 	
 	public CustomerLoginFilter() {

@@ -167,6 +167,17 @@ public class OrderDAOTest {
 	}
 
 	@Test
+	public void testGetByIdAndCustomerNull() {
+		Integer orderId = 33;
+		Integer customerId = 18;
+		
+		BookOrder order = orderDAO.get(orderId, customerId);
+		
+		assertNull(order);
+		
+	}
+	
+	@Test
 	public void testDeleteOrder() {
 		int orderId = 27;
 		orderDAO.delete(orderId);

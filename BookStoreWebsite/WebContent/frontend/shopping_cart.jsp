@@ -44,19 +44,17 @@
 							<c:forEach items="${cart.items}" var="item" varStatus="status">
 								<tr>
 									<td align="center">${status.index + 1}</td>
-									<td><img class="book-small" alt=""
-										src="data:image/jpg;base64, ${item.key.base64Image}" /></td>
+									<td>
+										<img class="book-small" alt="" src="data:image/jpg;base64, ${item.key.base64Image}" /></td>
 									<td><span id="book-title">${item.key.title}</span></td>
-
-									<td><input type="hidden" name="bookId"
-										value="${item.key.bookId}" /> <input type="text"
-										name="quantity${status.index + 1}" value="${item.value}"
-										size="5" /></td>
-
-									<td align="right"><fmt:formatNumber
-											value="${item.key.price}" type="currency" /></td>
-									<td align="right"><fmt:formatNumber
-											value="${item.value * item.key.price}" type="currency" /></td>
+									<td>
+										<input type="hidden" name="bookId" value="${item.key.bookId}" />
+										<input type="text" name="quantity${status.index + 1}" value="${item.value}" size="5" />
+									</td>
+									<td align="right">
+										<fmt:formatNumber value="${item.key.price}" type="currency" /></td>
+									<td align="right">
+										<fmt:formatNumber value="${item.value * item.key.price}" type="currency" /></td>
 									<td><a href="remove_from_cart?book_id=${item.key.bookId}"><b>Remove</b></a></td>
 								</tr>
 							</c:forEach>
@@ -64,8 +62,8 @@
 								<td colspan="3"></td>
 								<td align="center"><b>${cart.totalQuantity} book(s)</b></td>
 								<td align="right">Total:</td>
-								<td span="2" align="right"><fmt:formatNumber
-										value="${cart.totalAmount}" type="currency" /></td>
+								<td span="2" align="right">
+									<fmt:formatNumber value="${cart.totalAmount}" type="currency" /></td>
 							</tr>
 						</table>
 					</div>
@@ -76,8 +74,9 @@
 								<td></td>
 								<td><button type="submit">Update</button></td>
 								<td><input type="button" id="clearCart" name="clearCart" value="Clear Cart" /></td>
-								<td><a href="${pageContext.request.contextPath}/">Continue
-										Shopping</a></td>
+								<td>
+									<a href="${pageContext.request.contextPath}/">Continue Shopping</a>
+								</td>
 								<td><a href="checkout">Checkout</a></td>
 							</tr>
 						</table>
