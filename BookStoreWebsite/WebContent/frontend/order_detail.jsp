@@ -6,32 +6,29 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Manage Orders - Evergreen Bookstore Administration</title>
-<link rel="stylesheet" href="../css/style.css" />
-<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+<title>My Order Details - Evergreen Bookstore Administration</title>
+<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
 	<jsp:directive.include file="header.jsp" />
 
 	<div align="center">
-		<h2 class="pageheading">Details of Order Id: ${order.orderId}</h2>
+		<h2 class="pageheading">Your Order Id: ${order.orderId}</h2>
 	</div>
-	<c:if test="${message !=null}">
-		<div align="center">
-			<h4 class="message">${message}</h4>
 
-		</div>
-	</c:if>
 	<div align="center">
-		<h2>Order Overview:</h2>
 		<table>
 			<tr>
-				<td><b>Ordered By : </b></td>
-				<td>${order.customer.fullname}</td>
+				<td><b>Order Status : </b></td>
+				<td>${order.status}</td>
 			</tr>
 			<tr>
-				<td><b>Book Copies : </b></td>
+				<td><b>Order Date : </b></td>
+				<td>${order.orderDate}</td>
+			</tr>
+			<tr>
+				<td><b>Quantity : </b></td>
 				<td>${order.bookCopies}</td>
 			</tr>
 			<tr>
@@ -48,21 +45,14 @@
 				<td>${order.recipientPhone}</td>
 			</tr>
 			<tr>
-				<td><b>Payment Method : </b></td>
-				<td>${order.paymentMethod}</td>
-			</tr>
-			<tr>
-				<td><b>Shipping Address : </b></td>
+				<td><b>Ship to : </b></td>
 				<td>${order.shippingAddress}</td>
 			</tr>
 			<tr>
-				<td><b>Order Status : </b></td>
-				<td>${order.status}</td>
+				<td><b>Payment Method : </b></td>
+				<td>${order.paymentMethod}</td>
 			</tr>
-			<tr>
-				<td><b>Order Date : </b></td>
-				<td>${order.orderDate}</td>
-			</tr>
+
 		</table>
 	</div>
 	<div align="center">
@@ -70,8 +60,8 @@
 
 		<table border="1">
 			<tr>
-				<th>Index</th>
-				<th>Book Title</th>
+				<th>No.</th>
+				<th>Book</th>
 				<th>Author</th>
 				<th>Price</th>
 				<th>Quantity</th>
@@ -81,7 +71,9 @@
 				varStatus="status">
 				<tr>
 					<td>${status.index + 1}</td>
-					<td>${orderDetail.book.title}</td>
+					<td>
+					<img src="data:image/jpg;base64,${orderDetail.book.base64Image}" width="48" height="64" />
+					${orderDetail.book.title}</td>
 					<td>${orderDetail.book.author}</td>
 					<td><fmt:formatNumber value="${orderDetail.book.price}"
 							type="currency" currencySymbol="Tk " /></td>
@@ -103,32 +95,6 @@
 			href="">Delete this Order</a>
 	</div>
 	<jsp:directive.include file="footer.jsp" />
-
-	<script>
-		$(document)
-				.ready(
-						function() {
-							$(".deleteLink")
-									.each(
-											function() {
-												$(this)
-														.on(
-																"click",
-																function() {
-																	orderId = $(
-																			this)
-																			.attr(
-																					"id");
-																	if (confirm('Are you sure you want to delete the Order with id '
-																			+ orderId
-																			+ ' ?')) {
-																		window.location = 'delete_order?id='
-																				+ orderId;
-																	}
-																});
-											});
-						});
-	</script>
 
 </body>
 </html>
