@@ -46,10 +46,9 @@
 					<td>${order.paymentMethod}</td>
 					<td>${order.status}</td>
 					<td>${order.orderDate}</td>
-					<td><a href="view_order?id=${order.orderId}">Details</a> <a
-						href="edit_order?id=${order.orderId}">Edit</a> <a
-						href="javascript:void(0);" class="deleteLink"
-						id="${order.orderId}">Delete</a></td>
+					<td><a href="view_order?id=${order.orderId}">Details</a> 
+					<a href="edit_order?id=${order.orderId}">Edit</a> 
+					<a href="javascript:void(0);" class="deleteLink" id="${order.orderId}">Delete</a></td>
 				</tr>
 			</c:forEach>
 

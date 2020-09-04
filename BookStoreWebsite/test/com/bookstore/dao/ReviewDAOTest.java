@@ -120,4 +120,10 @@ public class ReviewDAOTest {
 		assertNotNull(result);
 	}
 	
+	@Test
+	public void testListMostRecent() {
+		List<Review> listMostRecent = reviewDao.listMostRecent();
+		
+		assertEquals(3, listMostRecent.size());
+	}
 }
