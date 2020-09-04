@@ -75,4 +75,8 @@ public class BookDAO extends JpaDAO<Book> implements GenericDAO<Book> {
 		return super.countWithNamedQuery("Book.countByCategory", "catId", categoryId);
 	}
 
+	public List<Book> listBestSellingBooks() {
+		return super.findWithNamedQuery("OrderDetail.bestSelling", 0, 4);
+
+	}
 }
