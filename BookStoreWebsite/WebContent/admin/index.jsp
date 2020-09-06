@@ -20,7 +20,7 @@
 		<h2 class="pageheading">Quick Access:</h2>
 		<b> <a href="new_book">New Book</a> &nbsp; <a href="user_form.jsp">New
 				User</a> &nbsp; <a href="category_form.jsp">New Category</a> &nbsp; <a
-			href="customer_form.jsp">New Customer</a> &nbsp;
+			href="new_customer">New Customer</a> &nbsp;
 		</b>
 	</div>
 
@@ -70,7 +70,7 @@
 					<td>${review.book.title}</td>
 					<td>${review.rating}</td>
 					<td><a href="edit_review?id=${review.reviewId}">${review.headline}</a></td>
-					<td>${review.customer.fullname}</td>
+					<td>${review.customer.firstname}</td>
 					<td>${review.reviewTime}</td>
 				</tr>
 			</c:forEach>

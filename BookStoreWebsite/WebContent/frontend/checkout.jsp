@@ -45,44 +45,64 @@
 						<c:forEach items="${cart.items}" var="item" varStatus="status">
 							<tr>
 								<td align="center">${status.index + 1}</td>
-								<td><img class="book-small" alt=""
-									src="data:image/jpg;base64, ${item.key.base64Image}" /></td>
+								<td><img class="book-small" alt="" src="data:image/jpg;base64, ${item.key.base64Image}" /></td>
 								<td><span id="book-title">${item.key.title}</span></td>
 								<td><span id="book-author">${item.key.author}</span></td>
-								<td align="right"><fmt:formatNumber
-										value="${item.key.price}" type="currency" /></td>
-								<td><input type="text" name="quantity${status.index + 1}"
-									value="${item.value}" size="5" readonly="readonly" /></td>
-								<td align="right"><fmt:formatNumber
-										value="${item.value * item.key.price}" type="currency" /></td>
+								<td align="right"><fmt:formatNumber value="${item.key.price}" type="currency" currencySymbol="Tk " /></td>
+								<td><input type="text" name="quantity${status.index + 1}" value="${item.value}" size="5" readonly="readonly" /></td>
+								<td align="right"><fmt:formatNumber value="${item.value * item.key.price}" type="currency" currencySymbol="Tk " /></td>
 								<td><a href="remove_from_cart?book_id=${item.key.bookId}"><b>Remove</b></a></td>
 							</tr>
 						</c:forEach>
 						<tr>
 							<td colspan="4"></td>
-							<td align="right">Total:</td>
+							<td align="right">Subtotal:</td>
 							<td align="center"><b>${cart.totalQuantity} book(s)</b></td>
-							<td span="2" align="right"><fmt:formatNumber
-									value="${cart.totalAmount}" type="currency" /></td>
+							<td span="2" align="right"><fmt:formatNumber value="${cart.totalAmount}" type="currency" currencySymbol="Tk " /></td>
+						</tr>
+						<tr>
+							<td colspan="5"></td>
+							<td align="right">TAX:</td>
+							<td span="2" align="right"><fmt:formatNumber value="${tax}" type="currency" currencySymbol="Tk " /></td>
+						</tr>
+						<tr>
+							<td colspan="5"></td>
+							<td align="right">Shipping Fee:</td>
+							<td span="2" align="right"><fmt:formatNumber value="${shippingFee}" type="currency" currencySymbol="Tk " /></td>
+						</tr>
+						<tr>
+							<td colspan="5"></td>
+							<td align="right">Total:</td>
+							<td span="2" align="right"><fmt:formatNumber value="${total}" type="currency" currencySymbol="Tk " /></td>
 						</tr>
 					</table>
-					<h2>Your Shipping Information:</h2>
+					<h2>Recipient Information:</h2>
 					<form id="orderForm" name="orderForm" action="place_order" method="post">
 						<table class="normal">
 							<tr>
-								<td>Recipient Name:</td>
-								<td><input type="text" name="recipientName" size="20"
-									value="${loggedCustomer.fullname}" /></td>
+								<td>First Name:</td>
+								<td><input type="text" name="firstname" size="20"
+									value="${loggedCustomer.firstname}" /></td>
 							</tr>
 							<tr>
-								<td>Recipient Phone:</td>
-								<td><input type="text" name="recipientPhone" size="20"
+								<td>Last Name:</td>
+								<td><input type="text" name="lastname" size="20"
+									value="${loggedCustomer.lastname}" /></td>
+							</tr>
+							<tr>
+								<td>Phone:</td>
+								<td><input type="text" name="phone" size="20"
 									value="${loggedCustomer.phone}" /></td>
 							</tr>
 							<tr>
-								<td>Street Address:</td>
-								<td><input type="text" name="address" size="20"
-									value="${loggedCustomer.address}" /></td>
+								<td>Address Line 01:</td>
+								<td><input type="text" name="addressLine1" size="20"
+									value="${loggedCustomer.addressLine1}" /></td>
+							</tr>
+							<tr>
+								<td>Address Line 02:</td>
+								<td><input type="text" name="addressLine2" size="20"
+									value="${loggedCustomer.addressLine2}" /></td>
 							</tr>
 							<tr>
 								<td>City:</td>
@@ -90,14 +110,24 @@
 									value="${loggedCustomer.city}" /></td>
 							</tr>
 							<tr>
+								<td>State:</td>
+								<td><input type="text" name="state" size="20"
+									value="${loggedCustomer.state}" /></td>
+							</tr>
+							<tr>
 								<td>Zip Code:</td>
-								<td><input type="text" name="zipCode" size="20"
+								<td><input type="text" name="zipcode" size="20"
 									value="${loggedCustomer.zipcode}" /></td>
 							</tr>
 							<tr>
-								<td>Country:</td>
-								<td><input type="text" name="country" size="20"
-									value="${loggedCustomer.country}" /></td>
+								<td align="right">Country:</td>
+								<td align="left"><select name="country" id="country"
+									name="country">
+										<c:forEach items="${mapCounties}" var="country">
+											<option value="${country.value}"
+												<c:if test='${loggedCustomer.country eq country.value}'>selected='selected'</c:if>>${country.key}</option>
+										</c:forEach>
+								</select>
 							</tr>
 
 						</table>
@@ -107,6 +137,7 @@
 							&nbsp; &nbsp; &nbsp;
 							<select name="paymentMethod">
 								<option value="Cash On Delivery">Cash On Delivery</option>
+								<option value="paypal">PayPal or Credit Card</option>
 							</select>
 						</div>
 						<div>
@@ -130,18 +161,24 @@
 	$(function() {
 		$("form[name='orderForm']").validate({
 			rules : {
-				recipientName: "required",
-				recipientPhone: "required",
-				address: "required",
+				firstname: "required",
+				lastname: "required",
+				phone: "required",
+				addressLine1: "required",
+				addressLine2: "required",
 				city: "required",
-				zipCode: "required",
+				state: "required",
+				zipcode: "required",
 				country: "required"
 			},
 			messages : {
-				recipientName: "Please enter recipient name",
-				recipientPhone: "Please enter phone number",
-				address: "Please enter street address",
+				firstname: "Please enter recipient name",
+				lastname: "Please enter recipient name",
+				phone: "Please enter phone number",
+				addressLine1: "Please enter street address",
+				addressLine2: "Please enter street address",
 				city: "Please enter city",
+				state: "Please enter state",
 				zipCode: "Please enter zipcode",
 				country: "Please enter country"
 			},

@@ -30,11 +30,14 @@ public class CustomerDAOTest {
 	public void testCreateCustomer() throws ParseException, IOException{
 		Customer customer = new Customer();
 		
-		customer.setEmail("kuddus@gmail.com");
-		customer.setFullname("Abdul Kuddus");
+		customer.setEmail("kuddus2@gmail.com");
+		customer.setFirstname("Abul");
+		customer.setLastname("Kuddus");
 		customer.setCity("New York");
+		customer.setState("Dhaka");
 		customer.setCountry("United States");
-		customer.setAddress("100 North Avenue");
+		customer.setAddressLine1("100 North Avenue");
+		customer.setAddressLine2("Line 2");
 		customer.setPassword("secret");
 		customer.setPhone("11888281881");
 		customer.setZipcode("121999");
@@ -46,7 +49,7 @@ public class CustomerDAOTest {
 
 	@Test
 	public void testGet() {
-		Integer customerId = 14;
+		Integer customerId = 23;
 		Customer customer = customerDao.get(customerId);
 		
 		assertNotNull(customer);
@@ -54,19 +57,20 @@ public class CustomerDAOTest {
 
 	@Test
 	public void testUpdateCustomer() {
-		Customer customer = customerDao.get(14);
-		String fullName = "Tom n Jerry";
-		customer.setFullname(fullName);
+		Customer customer = customerDao.get(23);
+		String firstname = "Tom";
+		customer.setFirstname(firstname);
 		
 		Customer updatedCustomer =  customerDao.update(customer);
 		
-		assertTrue(updatedCustomer.getFullname().equals(fullName));
+		assertTrue(updatedCustomer.getFirstname().equals(firstname));
+//		assertTrue(updatedCustomer.getLastname().equals(lastname));
 	}
 	
 	@Test
 	public void testDeleteObject() {
 
-		Integer customerId = 14;
+		Integer customerId = 23;
 		customerDao.delete(customerId);
 		Customer customer = customerDao.get(customerId);
 		
@@ -77,6 +81,10 @@ public class CustomerDAOTest {
 	@Test
 	public void testListAll() {
 		List<Customer> listCustomers = customerDao.listAll();
+		
+		for (Customer customer : listCustomers) {
+			System.out.println(customer.getFirstname());
+		}
 		assertFalse(listCustomers.isEmpty());
 	}
 
@@ -84,7 +92,7 @@ public class CustomerDAOTest {
 	public void testCount() {
 		long count = customerDao.count();
 		
-		assertEquals(1, count);
+		assertEquals(8, count);
 	}
 	
 	@Test

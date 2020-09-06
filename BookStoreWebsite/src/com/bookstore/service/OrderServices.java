@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -72,6 +71,26 @@ public class OrderServices {
 
 
 	public void showCheckoutForm() throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		ShopingCart shopingCart = (ShopingCart) session.getAttribute("cart");
+		
+		// tax is 5% of subtotal
+		float tax = shopingCart.getTotalAmount() * 0.05f;
+		
+		// shipping fee is 100 BDT per copy
+//		float shippingFee = shopingCart.getTotalQuantity() * 100.00f;
+		float shippingFee = 100.00f;
+		
+		float total = shopingCart.getTotalAmount() + tax + shippingFee;
+// --------------------------------- This is main calculation of Shopping Cart -----------------
+		
+		session.setAttribute("tax", tax);
+		session.setAttribute("shippingFee", shippingFee);
+		session.setAttribute("total", total);
+		
+		CommonUtility.generateCountryList(request);
+		
 		String checkOutPage = "frontend/checkout.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(checkOutPage);
 		dispatcher.forward(request, response);		
@@ -80,20 +99,29 @@ public class OrderServices {
 
 
 	public void placeOrder() throws ServletException, IOException {
-		String recipientName = request.getParameter("recipientName");
-		String recipientPhone = request.getParameter("recipientPhone");
-		String address = request.getParameter("address");
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
+		String phone = request.getParameter("phone");
+		String addressLine1 = request.getParameter("addressLine1");
+		String addressLine2 = request.getParameter("addressLine2");
 		String city = request.getParameter("city");
-		String zipCode = request.getParameter("zipCode");
+		String state = request.getParameter("state");
+		String zipcode = request.getParameter("zipcode");
 		String country = request.getParameter("country");
 		String paymentMethod = request.getParameter("paymentMethod");
-		String shippingAddress = address + ", " + city + ", " + zipCode + ", " + country;
 		
 		BookOrder order = new BookOrder();
-		order.setRecipientName(recipientName);
-		order.setRecipientPhone(recipientPhone);
-		order.setShippingAddress(shippingAddress);
+		order.setFirstname(firstname);
+		order.setLastname(lastname);
+		order.setPhone(phone);
+		order.setAddressLine1(addressLine1);
+		order.setAddressLine2(addressLine2);
+		order.setCity(city);
+		order.setState(state);
+		order.setZipcode(zipcode);
+		order.setCountry(country);
 		order.setPaymentMethod(paymentMethod);
+		
 		
 		HttpSession session = request.getSession();
 		Customer customer = (Customer) session.getAttribute("loggedCustomer");
@@ -105,6 +133,7 @@ public class OrderServices {
 		Iterator<Book> iterator = items.keySet().iterator();
 		
 		Set<OrderDetail> orderDetails = new HashSet<>();
+		
 		
 		while (iterator.hasNext()) {
 			Book book = iterator.next();
@@ -118,10 +147,19 @@ public class OrderServices {
 			orderDetail.setSubtotal(subtotal);
 			
 			orderDetails.add(orderDetail);
+			
 		}
 		
 		order.setOrderDetails(orderDetails);
-		order.setTotal(shoppingCart.getTotalAmount());
+		
+		float tax = (float) session.getAttribute("tax");
+		float shippingFee = (float) session.getAttribute("shippingFee");
+		float total = (float) session.getAttribute("total");
+		
+		order.setSubtotal(shoppingCart.getTotalAmount());
+		order.setTax(tax);
+		order.setShippingFee(shippingFee);
+		order.setTotal(total);
 		
 		orderDAO.create(order);
 		
@@ -179,6 +217,8 @@ public class OrderServices {
 			session.removeAttribute("NewBookPendingToAddToOrder");
 		}
 		
+		CommonUtility.generateCountryList(request);
+		
 		String editPage = "order_form.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(editPage);
 		dispatcher.forward(request, response);
@@ -192,15 +232,34 @@ public class OrderServices {
 		HttpSession session = request.getSession();
 		BookOrder order = (BookOrder) session.getAttribute("order");
 		
-		String recipientName = request.getParameter("recipientName");
-		String recipientPhone = request.getParameter("recipientPhone");
-		String shippingAddress = request.getParameter("shippingAddress");
+		String firstname = request.getParameter("firstName");
+		String lastname = request.getParameter("lastName");
+		String phone = request.getParameter("phone");
+		String addressLine1 = request.getParameter("addressLine1");
+		String addressLine2 = request.getParameter("addressLine2");
+		String city = request.getParameter("city");
+		String state = request.getParameter("state");
+		String zipCode = request.getParameter("zipcode");
+		String country = request.getParameter("country");
+
+		float shippingFee = Float.parseFloat(request.getParameter("shippingfee"));
+		float tax = Float.parseFloat(request.getParameter("tax"));
+		
 		String paymentMethod = request.getParameter("paymentMethod");
 		String orderStatus = request.getParameter("orderStatus");
 		
-		order.setRecipientName(recipientName);
-		order.setRecipientPhone(recipientPhone);
-		order.setShippingAddress(shippingAddress);
+		order.setFirstname(firstname);
+		order.setLastname(lastname);
+		order.setPhone(phone);
+		order.setAddressLine1(addressLine1);
+		order.setAddressLine2(addressLine2);
+		order.setCity(city);
+		order.setState(state);
+		order.setZipcode(zipCode);
+		order.setCountry(country);
+		order.setShippingFee(shippingFee);
+		order.setTax(tax);
+		
 		order.setPaymentMethod(paymentMethod);
 		order.setStatus(orderStatus);
 		
@@ -235,6 +294,10 @@ public class OrderServices {
 			totalAmount += subtotal;
 		}
 		
+		order.setSubtotal(totalAmount);
+		totalAmount += shippingFee;
+		totalAmount += tax;
+		
 		order.setTotal(totalAmount);
 		
 		orderDAO.update(order);
@@ -246,7 +309,6 @@ public class OrderServices {
 		
 		
 	}
-
 
 	public void deleteOrder() throws ServletException, IOException {
 		Integer orderId = Integer.parseInt(request.getParameter("id"));

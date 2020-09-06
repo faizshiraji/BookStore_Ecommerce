@@ -52,9 +52,9 @@
 										<input type="text" name="quantity${status.index + 1}" value="${item.value}" size="5" />
 									</td>
 									<td align="right">
-										<fmt:formatNumber value="${item.key.price}" type="currency" /></td>
+										<fmt:formatNumber value="${item.key.price}" type="currency" currencySymbol="Tk " /></td>
 									<td align="right">
-										<fmt:formatNumber value="${item.value * item.key.price}" type="currency" /></td>
+										<fmt:formatNumber value="${item.value * item.key.price}" type="currency" currencySymbol="Tk " /></td>
 									<td><a href="remove_from_cart?book_id=${item.key.bookId}"><b>Remove</b></a></td>
 								</tr>
 							</c:forEach>
@@ -63,7 +63,7 @@
 								<td align="center"><b>${cart.totalQuantity} book(s)</b></td>
 								<td align="right">Total:</td>
 								<td span="2" align="right">
-									<fmt:formatNumber value="${cart.totalAmount}" type="currency" /></td>
+									<fmt:formatNumber value="${cart.totalAmount}" type="currency" currencySymbol="Tk " /></td>
 							</tr>
 						</table>
 					</div>

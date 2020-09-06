@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,14 +22,24 @@
 					<td align="left"><b>${loggedCustomer.email}</b>(Cannot be changed.)</td>
 				</tr>
 				<tr>
-					<td align="right">Full Name:</td>
-					<td align="left"><input type="text" name="fullName"
-						id="fullName" size="20" value="${loggedCustomer.fullname}" /></td>
+					<td align="right">First Name:</td>
+					<td align="left"><input type="text" name="firstName"
+						id="firstName" size="20" value="${loggedCustomer.firstname}" /></td>
 				</tr>
 				<tr>
-					<td align="right">Address:</td>
-					<td align="left"><input type="text" name="address"
-						id="address" size="20" value="${loggedCustomer.address}" /></td>
+					<td align="right">Last Name:</td>
+					<td align="left"><input type="text" name="lastName"
+						id="lastName" size="20" value="${loggedCustomer.lastname}" /></td>
+				</tr>
+				<tr>
+					<td align="right">Address Line 01:</td>
+					<td align="left"><input type="text" name="addressLine1"
+						id="addressLine1" size="20" value="${loggedCustomer.addressLine1}" /></td>
+				</tr>
+				<tr>
+					<td align="right">Address Line 02:</td>
+					<td align="left"><input type="text" name="addressLine2"
+						id="addressLine2" size="20" value="${loggedCustomer.addressLine2}" /></td>
 				</tr>
 				<tr>
 					<td align="right">City:</td>
@@ -38,9 +47,19 @@
 						size="20" value="${loggedCustomer.city}" /></td>
 				</tr>
 				<tr>
+					<td align="right">State:</td>
+					<td align="left"><input type="text" name="state" id="state"
+						size="20" value="${loggedCustomer.state}" /></td>
+				</tr>
+				<tr>
 					<td align="right">Country:</td>
-					<td align="left"><input type="text" name="country"
-						id="country" size="20" value="${loggedCustomer.country}" /></td>
+					<td align="left"><select name="country" id="country"
+						name="country">
+							<c:forEach items="${mapCounties}" var="country">
+								<option value="${country.value}"
+									<c:if test='${loggedCustomer.country eq country.value}'>selected='selected'</c:if>>${country.key}</option>
+							</c:forEach>
+					</select>
 				</tr>
 				<tr>
 					<td align="right">Phone:</td>
@@ -86,45 +105,5 @@
 	<jsp:directive.include file="footer.jsp" />
 
 </body>
-<script type="text/javascript">
-	$(function() {
-		$("form[name='customerForm']").validate({
-			rules : {
-				email : {
-					required : true,
-					email : true
-				},
-				fullName : "required",
-
-				confirmPassword : {
-					equalTo : "#password"
-				},
-
-				phone : "required",
-				address : "required",
-				city : "required",
-				zipCode : "required",
-				country : "required"
-			},
-			messages : {
-				email : {
-					required : "Please enter e-mail address",
-					email : "Please enter a valid e-mail address"
-				},
-				fullName : "Please enter full name.",
-				confirmPassword : {
-					equalTo : "Confirm password does not match."
-				},
-				phone : "Please enter phone number.",
-				address : "Please enter your address.",
-				city : "Please enter your city.",
-				zipCode : "Please enter your zip code number.",
-				country : "Please enter your country."
-			},
-			submitHandler : function(form) {
-				form.submit();
-			}
-		});
-	});
-</script>
+<script type="text/javascript" src="js/customer-form.js"></script>
 </html>
