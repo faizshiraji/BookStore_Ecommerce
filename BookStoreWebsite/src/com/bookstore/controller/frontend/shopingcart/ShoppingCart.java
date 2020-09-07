@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.bookstore.entity.Book;
 
-public class ShopingCart {
+public class ShoppingCart {
 	private Map<Book, Integer> cart = new HashMap<>();
 	
 	public void addItem(Book book) {

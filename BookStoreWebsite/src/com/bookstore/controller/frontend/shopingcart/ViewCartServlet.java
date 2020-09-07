@@ -24,7 +24,7 @@ public class ViewCartServlet extends HttpServlet {
 		Object cartObject = request.getSession().getAttribute("cart");
 		
 		if (cartObject == null) {
-			ShopingCart shopingCart = new ShopingCart();
+			ShoppingCart shopingCart = new ShoppingCart();
 			request.getSession().setAttribute("cart", shopingCart);
 		}
 		

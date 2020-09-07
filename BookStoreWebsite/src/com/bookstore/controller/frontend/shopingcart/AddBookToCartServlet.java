@@ -23,13 +23,13 @@ public class AddBookToCartServlet extends HttpServlet {
 		Integer bookId = Integer.parseInt(request.getParameter("book_id"));
 		Object cartOrbject = request.getSession().getAttribute("cart");
 		
-		ShopingCart shopingCart = null;
+		ShoppingCart shopingCart = null;
 		
-		if (cartOrbject != null && cartOrbject instanceof ShopingCart) {
-			shopingCart = (ShopingCart) cartOrbject;
+		if (cartOrbject != null && cartOrbject instanceof ShoppingCart) {
+			shopingCart = (ShoppingCart) cartOrbject;
 			
 		}else {
-			shopingCart = new ShopingCart();
+			shopingCart = new ShoppingCart();
 			request.getSession().setAttribute("cart", shopingCart);
 		}
 		

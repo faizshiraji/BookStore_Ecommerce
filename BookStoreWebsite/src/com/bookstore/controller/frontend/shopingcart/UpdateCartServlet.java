@@ -34,7 +34,7 @@ public class UpdateCartServlet extends HttpServlet {
 		int[] bookIds = Arrays.stream(arrayBookIds).mapToInt(Integer::parseInt).toArray();
 		int[] quantities = Arrays.stream(arrayQuantities).mapToInt(Integer::parseInt).toArray();
 		
-		ShopingCart cart = (ShopingCart) request.getSession().getAttribute("cart");
+		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
 		cart.updateCart(bookIds, quantities);
 		
 		String cartPage = request.getContextPath().concat("/view_cart");

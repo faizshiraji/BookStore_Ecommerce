@@ -23,7 +23,7 @@ public class RemoveBookFromCartServlet extends HttpServlet {
 		Integer bookId = Integer.parseInt(request.getParameter("book_id"));
 		Object cartOrbject = request.getSession().getAttribute("cart");
 
-		ShopingCart shopingCart = (ShopingCart) cartOrbject;
+		ShoppingCart shopingCart = (ShoppingCart) cartOrbject;
 
 		shopingCart.removeItem(new Book(bookId));
 		;

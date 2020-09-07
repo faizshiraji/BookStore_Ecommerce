@@ -149,7 +149,7 @@ public class BookOrder implements java.io.Serializable {
 		this.addressLine1 = addressLine1;
 	}
 
-	@Column(name = "r_address_line2", nullable = false, length = 256)
+	@Column(name = "r_address_line2", length = 256)
 	public String getAddressLine2() {
 		return addressLine2;
 	}
@@ -176,7 +176,7 @@ public class BookOrder implements java.io.Serializable {
 		this.lastname = lastname;
 	}
 	
-	@Column(name = "r_phone", nullable = false, length = 15)
+	@Column(name = "r_phone", length = 15)
 	public String getPhone() {
 		return this.phone;
 	}

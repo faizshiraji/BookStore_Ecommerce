@@ -11,11 +11,11 @@ import com.bookstore.entity.Book;
 
 public class ShopingCartTest {
 
-	private static ShopingCart cart;
+	private static ShoppingCart cart;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		cart = new ShopingCart();
+		cart = new ShoppingCart();
 		Book book = new Book(39);
 		book.setPrice(10);
 		
@@ -57,7 +57,7 @@ public class ShopingCartTest {
 	
 	@Test
 	public void testGetTotalAmount1() {
-		ShopingCart cart = new ShopingCart();
+		ShoppingCart cart = new ShoppingCart();
 		assertEquals(0.0f, cart.getTotalAmount(), 0.0f);
 	}
 	
@@ -75,7 +75,7 @@ public class ShopingCartTest {
 	
 	@Test
 	public void testUpdateCart() {
-		ShopingCart cart = new ShopingCart();
+		ShoppingCart cart = new ShoppingCart();
 		Book book1 = new Book(1);
 		Book book2 = new Book(2);
 		
