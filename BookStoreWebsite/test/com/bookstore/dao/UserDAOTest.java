@@ -4,9 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 
 import org.junit.AfterClass;
@@ -16,16 +13,11 @@ import org.junit.Test;
 import com.bookstore.entity.Users;
 
 public class UserDAOTest {
-	private static EntityManagerFactory entityManagerFactory;
-	private static EntityManager entityManager;
 	private static UserDAO userDAO;
 	
 	@BeforeClass
-	public static void setUpClass() {
-		entityManagerFactory =	Persistence.createEntityManagerFactory("BookStoreWebsite");
-		entityManager = entityManagerFactory.createEntityManager();
-		
-		userDAO = new UserDAO(entityManager);
+	public static void setUpClass() throws Exception {
+		userDAO = new UserDAO();
 	}
 
 	@Test
@@ -38,8 +30,6 @@ public class UserDAOTest {
 		user1 = userDAO.create(user1);
 		
 		assertTrue(user1.getUserId() > 0);
-		
-		
 	}
 	
 	@Test(expected = PersistenceException.class)
@@ -114,10 +104,28 @@ public class UserDAOTest {
 	}
 
 	@Test
+	public void testCheckLoginSuccess() {
+		String email = "faiz@shiraji.me";
+		String password = "Faiz";
+		boolean loginResult = userDAO.checkLogin(email, password);
+		
+		assertTrue(loginResult);
+	}
+	
+	@Test
+	public void testCheckLoginFail() {
+		String email = "faiz@shiraji.me";
+		String password = "Faiz1";
+		boolean loginResult = userDAO.checkLogin(email, password);
+		
+		assertFalse(loginResult);
+	}
+	
+	@Test
 	public void testCount() {
 		long totalUsers = userDAO.count();
 		
-		assertEquals(2, totalUsers);
+		assertTrue(totalUsers > 0);
 	}
 	
 	@Test
@@ -128,10 +136,11 @@ public class UserDAOTest {
 		assertNotNull(user);
 	}
 	
+	
+	
 	@AfterClass
-	public static void tearDownClass() {
-		entityManager.close();
-		entityManagerFactory.close();
+	public static void tearDownAfterClass() throws Exception {
+		userDAO.close();
 	}
 	
 }

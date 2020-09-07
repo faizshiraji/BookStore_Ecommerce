@@ -5,19 +5,33 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Book Store Website</title>
+<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
 	<jsp:directive.include file="header.jsp" />
 
-	<div align="center">
-	<br /> <br />
-		<h3>This is main content:</h3>
+	<div class="center">
 		<h2>New Books:</h2>
-		<h2>Best-Selling Books:</h2>
-		<h2>Most-favored Books:</h2>
+		<c:forEach items="${listNewBooks}" var="book">
+			<jsp:directive.include file="book_group.jsp" />
+		</c:forEach>
 
-	<br /> <br />
+		<div class="next-row">
+			<h2>Best-Selling Books:</h2>
+
+			<c:forEach items="${listBestSellingBooks}" var="book">
+				<jsp:directive.include file="book_group.jsp" />
+			</c:forEach>
+		</div>
+
+		<div class="next-row">
+			<h2>Most-favored Books:</h2>
+			<c:forEach items="${listFavoredBooks}" var="book">
+				<jsp:directive.include file="book_group.jsp" />
+			</c:forEach>
+		</div>
+
+		<br /> <br />
 	</div>
 
 	<jsp:directive.include file="footer.jsp" />
